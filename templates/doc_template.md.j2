@@ -1,0 +1,9 @@
+# Documentation for {{ script_name }}
+
+{% for prompt in prompts %}
+- {{ prompt.text }}
+  {% if prompt.additional %}
+    {{ prompt.additional }}
+  {% endif %}
+{% endfor %}
+
