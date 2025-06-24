@@ -9,12 +9,6 @@ SCRIPT_NAME = "test.sh"
 
 class DocGenerator:
     """
-    Point is to check that the target file specified (the `.sh` script)
-    has somehow changed using the hash of the file.
-
-    If it did then perform the creation of a new one. Just delete if exists
-    already or create. Then, read it and create the prompts lines. Then use the template
-    from jinja2 to generate the documentation.
     """
 
     def __init__(self) -> None:
@@ -25,8 +19,8 @@ class DocGenerator:
 
     def check_sequence(self, sequence: dict) -> bool:
         """
-        Check that the current sequence has the correct values or at least the one required 
-        if not just erase it due to some and print a log
+        Check that the current sequence has at least the required keys
+        to be considered as a bare minimum sequence
         """
 
         return "echo" in sequence.keys()
