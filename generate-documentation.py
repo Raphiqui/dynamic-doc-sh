@@ -1,11 +1,15 @@
 import os
 import re
 import hashlib
+import logging
 
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 
 SCRIPT_NAME = "test.sh"
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 
 class DocGenerator:
@@ -64,13 +68,12 @@ class DocGenerator:
         if is_sequence_valid:
             self.sequences.append(sequence)
         else:
-            print(f"Please check this sequence, it might be wrong: {sequence}")
+            logger.info(f"Please check this sequence, it might be wrong: {sequence}")
 
     def _get_current_target_hash(self, path: str) -> hashlib.sha256:
-        try:
-            os.path.exists(path)
-        except Exception as e:
-            raise e
+        if not os.path.exists(path):
+            logger.error(f"The file {path} doesn't exist")
+            return
 
         with open(path, "rb") as f:
             return hashlib.sha256(f.read()).hexdigest()
@@ -78,6 +81,7 @@ class DocGenerator:
     def _get_previous_target_hash(self, path: str):
         previous_hash = ""
         if not os.path.exists(path):
+            logger.error(f"The file {path} doesn't exist")
             return previous_hash
 
         with open(path, "rb") as file:
@@ -91,8 +95,7 @@ class DocGenerator:
         try:
             os.remove("previous_hash.txt")
         except Exception as e:
-            print(e)
-            pass
+            logger.error(f"Error while removing the file: {e}")
 
         with open("previous_hash.txt", "w") as file:
             file.write(self._get_current_target_hash(SCRIPT_NAME))
@@ -102,7 +105,7 @@ class DocGenerator:
         previous_hash = self._get_previous_target_hash("previous_hash.txt")
 
         target_has_changed = current_hash != previous_hash
-        print(target_has_changed)
+        logger.info(target_has_changed)
 
         if target_has_changed:
             self._write_new_target_hash()
