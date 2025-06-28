@@ -8,6 +8,7 @@ from datetime import datetime
 
 SCRIPT_NAME = "test.sh"
 
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
@@ -20,6 +21,7 @@ class DocGenerator:
         self._read_file()
         self._env = Environment(loader=FileSystemLoader("templates"))
         self._template = self._env.get_template("doc_template.md.j2")
+        self.previous_hash_path = "previous_hash.txt"
 
     def check_sequence(self, sequence: dict) -> bool:
         """
@@ -93,16 +95,16 @@ class DocGenerator:
 
     def _write_new_target_hash(self) -> None:
         try:
-            os.remove("previous_hash.txt")
+            os.remove(self.previous_hash_path)
         except Exception as e:
             logger.error(f"Error while removing the file: {e}")
 
-        with open("previous_hash.txt", "w") as file:
+        with open(self.previous_hash_path, "w") as file:
             file.write(self._get_current_target_hash(SCRIPT_NAME))
 
     def _target_hash_changed(self) -> bool:
         current_hash = self._get_current_target_hash(SCRIPT_NAME)
-        previous_hash = self._get_previous_target_hash("previous_hash.txt")
+        previous_hash = self._get_previous_target_hash(self.previous_hash_path)
 
         target_has_changed = current_hash != previous_hash
         logger.info(target_has_changed)
