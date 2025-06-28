@@ -7,9 +7,9 @@ from datetime import datetime
 
 SCRIPT_NAME = "test.sh"
 
+
 class DocGenerator:
-    """
-    """
+    """ """
 
     def __init__(self) -> None:
         self.sequences = []
@@ -25,8 +25,10 @@ class DocGenerator:
 
         return "echo" in sequence.keys()
 
-    def _hydrate_sequence(self, sequence: dict, pattern: str, line: str, key_name: str) -> None:
-        
+    def _hydrate_sequence(
+        self, sequence: dict, pattern: str, line: str, key_name: str
+    ) -> None:
+
         match = re.search(pattern, line)
         if match and key_name not in sequence:
             sequence[key_name] = match.group(1)
@@ -53,12 +55,12 @@ class DocGenerator:
 
                 if "@default" in line:
                     self._hydrate_sequence(sequence, r":(.*)", line, "default")
-                
+
                 if "echo" in line:
                     self._hydrate_sequence(sequence, r'"(.*?)"', line, "echo")
 
         is_sequence_valid = self.check_sequence(sequence)
-        
+
         if is_sequence_valid:
             self.sequences.append(sequence)
         else:
@@ -74,6 +76,7 @@ class DocGenerator:
 
         with open(f"{SCRIPT_NAME}-doc.md", "w") as file:
             file.write(output)
+
 
 generator = DocGenerator()
 generator.generate()
