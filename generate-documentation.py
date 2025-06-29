@@ -16,12 +16,16 @@ class DocGenerator:
     def __init__(
         self,
         script_path: str,
+        doc_template_path: str = "doc_template.md.j2",
+        previous_hash_path: str = "previous_hash.txt",
+    ) -> None:
         self.script_path = script_path
+        self.doc_template_path = doc_template_path
+        self.previous_hash_path = previous_hash_path
         self.sequences = []
         self._read_file()
         self._env = Environment(loader=FileSystemLoader("templates"))
-        self._template = self._env.get_template("doc_template.md.j2")
-        self.previous_hash_path = "previous_hash.txt"
+        self._template = self._env.get_template(self.doc_template_path)
 
     def check_sequence(self, sequence: dict) -> bool:
         """
