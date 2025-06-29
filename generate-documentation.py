@@ -6,9 +6,6 @@ import logging
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 
-SCRIPT_NAME = "test.sh"
-
-
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
@@ -16,7 +13,10 @@ logging.basicConfig(level=logging.DEBUG)
 class DocGenerator:
     """ """
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        script_path: str,
+        self.script_path = script_path
         self.sequences = []
         self._read_file()
         self._env = Environment(loader=FileSystemLoader("templates"))
@@ -50,7 +50,7 @@ class DocGenerator:
         processed as the question until reaching ...
         """
 
-        with open(SCRIPT_NAME, "r") as file:
+        with open(self.script_path, "r") as file:
             lines = file.readlines()
             sequence = {}
 
@@ -100,10 +100,10 @@ class DocGenerator:
             logger.error(f"Error while removing the file: {e}")
 
         with open(self.previous_hash_path, "w") as file:
-            file.write(self._get_current_target_hash(SCRIPT_NAME))
+            file.write(self._get_current_target_hash(self.script_path))
 
     def _target_hash_changed(self) -> bool:
-        current_hash = self._get_current_target_hash(SCRIPT_NAME)
+        current_hash = self._get_current_target_hash(self.script_path)
         previous_hash = self._get_previous_target_hash(self.previous_hash_path)
 
         target_has_changed = current_hash != previous_hash
@@ -120,14 +120,14 @@ class DocGenerator:
             return
 
         output = self._template.render(
-            script_name=SCRIPT_NAME,
+            script_name=self.script_path,
             prompts=self.sequences,
             metadata={"timestamp": datetime.now().isoformat()},
         )
 
-        with open(f"{SCRIPT_NAME}-doc.md", "w") as file:
+        with open(f"{self.script_path}-doc.md", "w") as file:
             file.write(output)
 
 
-generator = DocGenerator()
+generator = DocGenerator("test.sh")
 generator.generate()
