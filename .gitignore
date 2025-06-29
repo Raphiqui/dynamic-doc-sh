@@ -1,0 +1,6 @@
+.python-version
+
+previous_hash.txt
+
+*.md
+!README.md
