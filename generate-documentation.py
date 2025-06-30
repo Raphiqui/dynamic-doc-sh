@@ -90,6 +90,9 @@ class DocGenerator:
     def _hydrate_sequence(
         self, sequence: dict, pattern: str, line: str, key_name: str
     ) -> None:
+        """
+        Update the sequence with tags found in the script
+        """
 
         match = re.search(pattern, line)
         if match and key_name not in sequence:
