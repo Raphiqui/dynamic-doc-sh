@@ -10,6 +10,57 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 
+class HashHandler:
+    """
+    """
+
+    def __init__(self, script_path: str, previous_hash_path: str = "previous_hash.txt"):
+        self.script_path = script_path
+        self.previous_hash_path = previous_hash_path
+
+    def _get_current_target_hash(self, path: str) -> hashlib.sha256 | None:
+        if not os.path.exists(path):
+            logger.error(f"The file {path} doesn't exist")
+            return
+
+        with open(path, "rb") as f:
+            return hashlib.sha256(f.read()).hexdigest()
+
+    def _get_previous_target_hash(self, path: str):
+        previous_hash = ""
+        if not os.path.exists(path):
+            logger.error(f"The file {path} doesn't exist")
+            return previous_hash
+
+        with open(path, "rb") as file:
+            lines = file.readlines()
+            for line in lines:
+                previous_hash += line.decode("utf-8")
+
+            return previous_hash
+
+    def _write_new_target_hash(self) -> None:
+        try:
+            os.remove(self.previous_hash_path)
+        except Exception as e:
+            logger.error(f"Error while removing the file: {e}")
+
+        with open(self.previous_hash_path, "w") as file:
+            file.write(self._get_current_target_hash(self.script_path))
+
+    def target_hash_changed(self) -> bool:
+        current_hash = self._get_current_target_hash(self.script_path)
+        previous_hash = self._get_previous_target_hash(self.previous_hash_path)
+
+        target_has_changed = current_hash != previous_hash
+        logger.info(target_has_changed)
+
+        if target_has_changed:
+            self._write_new_target_hash()
+
+        return target_has_changed
+
+
 class DocGenerator:
     """ """
 
@@ -26,6 +77,7 @@ class DocGenerator:
         self._read_file()
         self._env = Environment(loader=FileSystemLoader("templates"))
         self._template = self._env.get_template(self.doc_template_path)
+        self.hash_handler = HashHandler(script_path, previous_hash_path)
 
     def check_sequence(self, sequence: dict) -> bool:
         """
@@ -76,51 +128,9 @@ class DocGenerator:
         else:
             logger.info(f"Please check this sequence, it might be wrong: {sequence}")
 
-    def _get_current_target_hash(self, path: str) -> hashlib.sha256:
-        if not os.path.exists(path):
-            logger.error(f"The file {path} doesn't exist")
-            return
-
-        with open(path, "rb") as f:
-            return hashlib.sha256(f.read()).hexdigest()
-
-    def _get_previous_target_hash(self, path: str):
-        previous_hash = ""
-        if not os.path.exists(path):
-            logger.error(f"The file {path} doesn't exist")
-            return previous_hash
-
-        with open(path, "rb") as file:
-            lines = file.readlines()
-            for line in lines:
-                previous_hash += line.decode("utf-8")
-
-            return previous_hash
-
-    def _write_new_target_hash(self) -> None:
-        try:
-            os.remove(self.previous_hash_path)
-        except Exception as e:
-            logger.error(f"Error while removing the file: {e}")
-
-        with open(self.previous_hash_path, "w") as file:
-            file.write(self._get_current_target_hash(self.script_path))
-
-    def _target_hash_changed(self) -> bool:
-        current_hash = self._get_current_target_hash(self.script_path)
-        previous_hash = self._get_previous_target_hash(self.previous_hash_path)
-
-        target_has_changed = current_hash != previous_hash
-        logger.info(target_has_changed)
-
-        if target_has_changed:
-            self._write_new_target_hash()
-
-        return target_has_changed
-
     def generate(self) -> None:
 
-        if not self._target_hash_changed():
+        if not self.hash_handler.target_hash_changed():
             return
 
         output = self._template.render(
