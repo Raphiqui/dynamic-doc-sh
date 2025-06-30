@@ -18,13 +18,13 @@ class HashHandler:
         self.script_path = script_path
         self.previous_hash_path = previous_hash_path
 
-    def _get_current_target_hash(self, path: str) -> hashlib.sha256 | None:
+    def _get_current_target_hash(self, path: str) -> str:
         if not os.path.exists(path):
             logger.error(f"The file {path} doesn't exist")
-            return
+            return ""
 
         with open(path, "rb") as f:
-            return hashlib.sha256(f.read()).hexdigest()
+            return str(hashlib.sha256(f.read()).hexdigest())
 
     def _get_previous_target_hash(self, path: str):
         previous_hash = ""
