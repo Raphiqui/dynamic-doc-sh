@@ -85,7 +85,15 @@ class DocGenerator:
         to be considered as a bare minimum sequence
         """
 
-        return "read" in sequence.keys()
+        keys = sequence.keys()
+
+        if "read" not in keys:
+            return False
+
+        if "default" not in keys:
+            return False
+
+        return True
 
     def _hydrate_sequence(
         self, sequence: dict, pattern: str, line: str, key_name: str
@@ -124,12 +132,11 @@ class DocGenerator:
                 if "read" in line:
                     self._hydrate_sequence(sequence, r'"(.*?)"', line, "read")
 
-        is_sequence_valid = self.check_sequence(sequence)
+                is_sequence_valid = self.check_sequence(sequence)
 
-        if is_sequence_valid:
-            self.sequences.append(sequence)
-        else:
-            logger.info(f"Please check this sequence, it might be wrong: {sequence}")
+                if is_sequence_valid:
+                    self.sequences.append(sequence)
+                    sequence = {}
 
     def generate(self) -> None:
 
