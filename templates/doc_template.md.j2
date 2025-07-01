@@ -1,6 +1,6 @@
 # Documentation for {{ script_name }}
-
 {% for prompt in prompts %}
-- {{ prompt.echo }} {% if prompt.default %}{{ prompt.default}}{% endif %}
+{{ prompt.question }}
+- {{ prompt.read }}:{{ prompt.default }}
 {% endfor %}
 
