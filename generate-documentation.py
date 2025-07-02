@@ -48,6 +48,7 @@ class HashHandler:
         with open(self.previous_hash_path, "w") as file:
             file.write(self._get_current_target_hash(self.script_path))
 
+    @property
     def target_hash_changed(self) -> bool:
         current_hash = self._get_current_target_hash(self.script_path)
         previous_hash = self._get_previous_target_hash(self.previous_hash_path)
@@ -139,7 +140,7 @@ class DocGenerator:
 
     def generate(self) -> None:
 
-        if not self.hash_handler.target_hash_changed():
+        if not self.hash_handler.target_hash_changed:
             return
 
         output = self._template.render(
