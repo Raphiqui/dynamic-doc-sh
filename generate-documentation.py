@@ -53,7 +53,6 @@ class HashHandler:
         previous_hash = self._get_previous_target_hash(self.previous_hash_path)
 
         target_has_changed = current_hash != previous_hash
-        logger.info(target_has_changed)
 
         if target_has_changed:
             self._write_new_target_hash()
