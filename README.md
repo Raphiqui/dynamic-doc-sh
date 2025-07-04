@@ -18,7 +18,7 @@ Similar to how Swagger generates API documentation from code annotations, this t
 
 ## How It Works
 
-Add Tags: Place documentation tags directly above the code elements you want to document
-Run Generator: Execute the script to parse your shell files
-Get Documentation: Clean Markdown documentation is generated/updated automatically
+ - Add tags, place documentation tags directly above the code elements you want to document
+ - Run generator, execute the script to parse your shell files
+ - Get documentation, lean Markdown documentation is generated/updated automatically
 
