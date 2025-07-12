@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 class HashHandler:
     """
+    This is something to handle hasing
     """
 
     def __init__(self, script_path: str, previous_hash_path: str = "previous_hash.txt"):
@@ -70,6 +71,12 @@ class DocGenerator:
         doc_template_path: str = "doc_template.md.j2",
         previous_hash_path: str = "previous_hash.txt",
     ) -> None:
+        """
+        For now just the .sh scripts are available
+        Script path is basically where is the script you want to document
+        Doc template path in case some other templates are availables
+        """
+
         self.script_path = script_path
         self.doc_template_path = doc_template_path
         self.previous_hash_path = previous_hash_path
