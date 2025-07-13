@@ -1,65 +1,8 @@
-import os
 import re
-import hashlib
-import logging
 
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
-
-
-class HashHandler:
-    """
-    This is something to handle hasing
-    """
-
-    def __init__(self, script_path: str, previous_hash_path: str = "previous_hash.txt"):
-        self.script_path = script_path
-        self.previous_hash_path = previous_hash_path
-
-    def _get_current_target_hash(self, path: str) -> str:
-        if not os.path.exists(path):
-            logger.error(f"The file {path} doesn't exist")
-            return ""
-
-        with open(path, "rb") as f:
-            return str(hashlib.sha256(f.read()).hexdigest())
-
-    def _get_previous_target_hash(self, path: str):
-        previous_hash = ""
-        if not os.path.exists(path):
-            logger.error(f"The file {path} doesn't exist")
-            return previous_hash
-
-        with open(path, "rb") as file:
-            lines = file.readlines()
-            for line in lines:
-                previous_hash += line.decode("utf-8")
-
-            return previous_hash
-
-    def _write_new_target_hash(self) -> None:
-        try:
-            os.remove(self.previous_hash_path)
-        except Exception as e:
-            logger.error(f"Error while removing the file: {e}")
-
-        with open(self.previous_hash_path, "w") as file:
-            file.write(self._get_current_target_hash(self.script_path))
-
-    @property
-    def target_hash_changed(self) -> bool:
-        current_hash = self._get_current_target_hash(self.script_path)
-        previous_hash = self._get_previous_target_hash(self.previous_hash_path)
-
-        target_has_changed = current_hash != previous_hash
-
-        if target_has_changed:
-            self._write_new_target_hash()
-
-        return target_has_changed
+from hash_handling import HashHandler
 
 
 class DocGenerator:
@@ -111,7 +54,7 @@ class DocGenerator:
 
         match = re.search(pattern, line)
         if match and key_name not in sequence:
-            sequence[key_name] = match.group(1)
+            sequence[key_name] = match.group(1).strip()
 
     def _read_file(self) -> None:
         """
