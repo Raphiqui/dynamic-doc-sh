@@ -5,7 +5,7 @@ from logging_config import logger
 
 class HashHandler:
     """
-    Hashing process similar to the `.lock` file in javascript
+    Hashing process similar to the `.lock` file in JavaScript
     or `.in` in python
     """
 
