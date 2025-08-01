@@ -22,3 +22,9 @@ Similar to how Swagger generates API documentation from code annotations, this t
  - Run generator, execute the script to parse your shell files
  - Get documentation, lean Markdown documentation is generated/updated automatically
 
+## Testing
+
+Run tests:
+
+cd .
+python -m pytest
