@@ -28,6 +28,6 @@ Run tests:
 
 ```
 cd .
-python -m pytest
+python -m pytest -s
 ```
 
