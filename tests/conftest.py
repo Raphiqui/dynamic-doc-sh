@@ -45,5 +45,12 @@ def temp_files():
 def hash_handler(temp_files):
     """Create HashHandler instance with temporary file"""
     return HashHandler(
-        script_path=temp_files["script_fie"], previous_hash_path=temp_files["hash_file"]
+        script_path=temp_files["script_file"],
+        previous_hash_path=temp_files["hash_file"],
     )
+
+
+@pytest.fixture
+def previous_test_script_hash():
+
+    return "a0bc2965e137ce31edfc97a9ab8faaa44119d6edaa27747135028a2da8250afd"
