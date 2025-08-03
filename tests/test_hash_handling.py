@@ -13,10 +13,8 @@ class TestHashHandler:
 
 class TestGenerator:
 
-    def test_script(self, temp_files, previous_test_script_hash):
+    def test_script(self, temp_files, test_script_hash):
 
         with open(temp_files["script_file"], "rb") as file:
             current_hash = str(hashlib.sha256(file.read()).hexdigest())
-            assert (
-                current_hash == previous_test_script_hash
-            ), "Test script has changed somehow"
+            assert current_hash == test_script_hash, "Test script has changed somehow"

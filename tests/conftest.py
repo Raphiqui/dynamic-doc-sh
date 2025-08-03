@@ -51,6 +51,5 @@ def hash_handler(temp_files):
 
 
 @pytest.fixture
-def previous_test_script_hash():
-
+def test_script_hash():
     return "a0bc2965e137ce31edfc97a9ab8faaa44119d6edaa27747135028a2da8250afd"
