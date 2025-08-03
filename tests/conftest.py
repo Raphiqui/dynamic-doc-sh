@@ -12,6 +12,7 @@ def temp_files():
     """Create temporary files for testing"""
     temp_dir = Path(tempfile.mkdtemp())
     script_file = temp_dir / "test_script.sh"
+    markdown_file = temp_dir / "markdown_file.md"
     hash_file = temp_dir / "previous_hash.txt"
 
     # Create a test script file with content
@@ -28,12 +29,28 @@ def temp_files():
 
     script_file.write_text(script_content)
 
-    yield {"temp_dir": temp_dir, "script_file": script_file, "hash_file": hash_file}
+    markdown_content = """
+    # Documentation for test.sh
+
+    Developer settings are used in development mode, don't use it if you deploy in production
+    - Use Developer Settings [YES/no]:yes
+    """
+
+    markdown_file.write_text(markdown_content)
+
+    yield {
+        "temp_dir": temp_dir,
+        "script_file": script_file,
+        "hash_file": hash_file,
+        "markdown_file": markdown_file,
+    }
 
     # Cleanup
     try:
         if os.path.exists(script_file):
             os.remove(script_file)
+        if os.path.exists(markdown_file):
+            os.remove(markdown_file)
         if os.path.exists(hash_file):
             os.remove(hash_file)
         os.rmdir(temp_dir)
@@ -48,6 +65,11 @@ def hash_handler(temp_files):
         script_path=temp_files["script_file"],
         previous_hash_path=temp_files["hash_file"],
     )
+
+
+@pytest.fixture
+def markdown_temp_file_hash():
+    return "0083500972854b8b48528f35d79759a3991ef8209110197f787a53b58b5d1de7"
 
 
 @pytest.fixture
