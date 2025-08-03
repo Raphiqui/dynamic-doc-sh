@@ -1,4 +1,5 @@
 from hash_handling import HashHandler
+import hashlib
 
 
 class TestHashHandler:
@@ -7,4 +8,15 @@ class TestHashHandler:
         assert hash_handler.script_path is not None, "script_path must not be empty"
         assert (
             hash_handler.previous_hash_path is not None
-        ), "previous_hash_path must not be emptprevious_hash_path must not be emptprevious_hash_path must not be empty"
+        ), "previous_hash_path must not be empty"
+
+
+class TestGenerator:
+
+    def test_script(self, temp_files, previous_test_script_hash):
+
+        with open(temp_files["script_file"], "rb") as file:
+            current_hash = str(hashlib.sha256(file.read()).hexdigest())
+            assert (
+                current_hash == previous_test_script_hash
+            ), "Test script has changed somehow"
