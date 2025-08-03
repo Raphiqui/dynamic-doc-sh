@@ -26,5 +26,8 @@ Similar to how Swagger generates API documentation from code annotations, this t
 
 Run tests:
 
+```
 cd .
 python -m pytest
+```
+
