@@ -28,7 +28,7 @@ def temp_files():
 
     script_file.write_text(script_content)
 
-    yield {"temp_dir": temp_dir, "script_fie": script_file, "hash_file": hash_file}
+    yield {"temp_dir": temp_dir, "script_file": script_file, "hash_file": hash_file}
 
     # Cleanup
     try:
