@@ -40,7 +40,7 @@ class DocGenerator:
         if "read" not in keys:
             return False
 
-        if "default" not in keys:
+        if "doc" not in keys:
             return False
 
         return True
@@ -74,7 +74,7 @@ class DocGenerator:
             for line in lines:
                 if "@doc" in line:
                     # pattern = r"\"(.*?)\""
-                    self._hydrate_sequence(sequence, r":(.*)", line, "question")
+                    self._hydrate_sequence(sequence, r":(.*)", line, "doc")
 
                 if "@default" in line:
                     self._hydrate_sequence(sequence, r":(.*)", line, "default")

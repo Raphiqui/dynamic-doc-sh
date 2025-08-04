@@ -28,7 +28,6 @@ read -e -i app-container -p "Enter container name" container_name
 echo "Container Name: $container_name"
 
 # @doc: Another test
-# @default: hello world!
 read -e -i bar -p "Enter foo" foo
 
 echo "Running command: kubectl exec -n $namespace $pod_name -c $container_name -- echo Hello World"

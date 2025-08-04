@@ -16,5 +16,5 @@ Container name
 - Enter container name:my-container
 
 Another test
-- Enter foo:hello world!
+- Enter foo:
 
