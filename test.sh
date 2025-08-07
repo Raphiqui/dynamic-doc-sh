@@ -31,4 +31,4 @@ echo "Container Name: $container_name"
 read -e -i bar -p "Enter foo" foo
 
 echo "Running command: kubectl exec -n $namespace $pod_name -c $container_name -- echo Hello World"
-echo "Testing config"
+echo "Testing config1"
