@@ -1,5 +1,6 @@
 import re
 
+import argparse
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 from hash_handling import HashHandler
@@ -10,9 +11,6 @@ class DocGenerator:
 
     def __init__(
         self,
-        script_path: str,
-        doc_template_path: str = "doc_template.md.j2",
-        previous_hash_path: str = "previous_hash.txt",
     ) -> None:
         """
         For now just the .sh scripts are available
@@ -20,19 +18,27 @@ class DocGenerator:
         Doc template path in case some other templates are available
         """
 
-        self.script_path = script_path
-        self.doc_template_path = doc_template_path
-        self.previous_hash_path = previous_hash_path
+        self.parser = argparse.ArgumentParser(description="Documentation generator")
+
+        self.parser.add_argument("--script_path", type=str, default="test.sh", help="The default script to be documented")
+        self.parser.add_argument("--doc_template_path", type=str, default="doc_template.md.j2", help="Jinja template to generate the documentation")
+        self.parser.add_argument("--previous_hash_path", type=str, default="previous_hash.txt", help="Hahs of the previous documentation generated")
+
+        self.args = self.parser.parse_args()
+
+        self.script_path = self.args.script_path
+        self.doc_template_path = self.args.doc_template_path
+        self.previous_hash_path = self.args.previous_hash_path
         self.sequences = []
         self._read_file()
         self._env = Environment(loader=FileSystemLoader("templates"))
         self._template = self._env.get_template(self.doc_template_path)
-        self.hash_handler = HashHandler(script_path, previous_hash_path)
+        self.hash_handler = HashHandler(self.script_path, self.previous_hash_path)
 
     def check_sequence(self, sequence: dict) -> bool:
         """
         Check that the current sequence has at least the required keys
-        to be considered as a bare minimum sequence
+        to be considered as a bare minimum sequence.
         """
 
         keys = sequence.keys()
@@ -103,5 +109,6 @@ class DocGenerator:
             file.write(output)
 
 
-generator = DocGenerator("test.sh")
-generator.generate()
+if __name__ == "__main__":
+    generator = DocGenerator()
+    generator.generate()
