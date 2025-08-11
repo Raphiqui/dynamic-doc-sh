@@ -17,7 +17,7 @@ class DocGenerator:
         """
         For now just the .sh scripts are available
         Script path is basically where is the script you want to document
-        Doc template path in case some other templates are availables
+        Doc template path in case some other templates are available
         """
 
         self.script_path = script_path
