@@ -1,8 +1,9 @@
-import re
-
 import argparse
-from jinja2 import Environment, FileSystemLoader
+import re
 from datetime import datetime
+
+from jinja2 import Environment, FileSystemLoader
+
 from hash_handling import HashHandler
 
 
@@ -20,9 +21,24 @@ class DocGenerator:
 
         self.parser = argparse.ArgumentParser(description="Documentation generator")
 
-        self.parser.add_argument("--script_path", type=str, default="test.sh", help="The default script to be documented")
-        self.parser.add_argument("--doc_template_path", type=str, default="doc_template.md.j2", help="Jinja template to generate the documentation")
-        self.parser.add_argument("--previous_hash_path", type=str, default="previous_hash.txt", help="Hahs of the previous documentation generated")
+        self.parser.add_argument(
+            "--script_path",
+            type=str,
+            default="test.sh",
+            help="The default script to be documented",
+        )
+        self.parser.add_argument(
+            "--doc_template_path",
+            type=str,
+            default="doc_template.md.j2",
+            help="Jinja template to generate the documentation",
+        )
+        self.parser.add_argument(
+            "--previous_hash_path",
+            type=str,
+            default="previous_hash.txt",
+            help="Hahs of the previous documentation generated",
+        )
 
         self.args = self.parser.parse_args()
 
