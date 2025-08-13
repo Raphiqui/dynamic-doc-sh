@@ -1,9 +1,12 @@
 import os
+import sys
 import tempfile
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
+from generate_documentation import DocGenerator
 from hash_handling import HashHandler
 
 
@@ -65,6 +68,26 @@ def hash_handler(temp_files):
         script_path=temp_files["script_file"],
         previous_hash_path=temp_files["hash_file"],
     )
+
+
+@pytest.fixture
+def generator(temp_files):
+    """Create DocGenerator with custom template path"""
+
+    test_args = [
+        "generate_documentation.py",
+        "--script_path",
+        str(Path(__file__).parent / "default.sh"),
+        "--previous_hash_path",
+        str(temp_files["hash_file"]),
+        "--output_path",
+        str(temp_files["temp_dir"]),
+    ]
+
+    with patch.object(sys, "argv", test_args):
+        from generate_documentation import DocGenerator
+
+        yield DocGenerator()
 
 
 @pytest.fixture
