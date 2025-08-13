@@ -1,6 +1,7 @@
 import argparse
 import re
 from datetime import datetime
+from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -39,12 +40,19 @@ class DocGenerator:
             default="previous_hash.txt",
             help="Hahs of the previous documentation generated",
         )
+        self.parser.add_argument(
+            "--output_path",
+            type=str,
+            default=Path(__file__).parent,
+            help="Where the output file will be",
+        )
 
         self.args = self.parser.parse_args()
 
         self.script_path = self.args.script_path
         self.doc_template_path = self.args.doc_template_path
         self.previous_hash_path = self.args.previous_hash_path
+        self.output_path = self.args.output_path
         self.sequences = []
         self._read_file()
         self._env = Environment(loader=FileSystemLoader("templates"))
@@ -121,7 +129,7 @@ class DocGenerator:
             metadata={"timestamp": datetime.now().isoformat()},
         )
 
-        with open(f"{self.script_path}-doc.md", "w") as file:
+        with open(f"{self.output_path}/{self.script_path}-doc.md", "w") as file:
             file.write(output)
 
 
