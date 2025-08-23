@@ -14,33 +14,16 @@ from hash_handling import HashHandler
 def temp_files():
     """Create temporary files for testing"""
     temp_dir = Path(tempfile.mkdtemp())
-    script_file = temp_dir / "test_script.sh"
     hash_file = temp_dir / "previous_hash.txt"
-
-    # Create a test script file with content
-    script_content = """
-        #!/bin/bash
-
-        set -e
-
-        # @doc: Developer settings are used in development mode, don't use it if you deploy in production
-        # @default: yes
-        read -e -i yes -p "Use Developer Settings [YES/no]" developer_settings
-        echo "Developer Settings: $developer_settings"
-    """
-
-    script_file.write_text(script_content)
 
     yield {
         "temp_dir": temp_dir,
-        "script_file": script_file,
         "hash_file": hash_file,
     }
 
     # Cleanup
+
     try:
-        if os.path.exists(script_file):
-            os.remove(script_file)
         if os.path.exists(hash_file):
             os.remove(hash_file)
         os.rmdir(temp_dir)
