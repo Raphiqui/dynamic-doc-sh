@@ -15,7 +15,6 @@ def temp_files():
     """Create temporary files for testing"""
     temp_dir = Path(tempfile.mkdtemp())
     script_file = temp_dir / "test_script.sh"
-    markdown_file = temp_dir / "markdown_file.md"
     hash_file = temp_dir / "previous_hash.txt"
 
     # Create a test script file with content
@@ -32,28 +31,16 @@ def temp_files():
 
     script_file.write_text(script_content)
 
-    markdown_content = """
-    # Documentation for test.sh
-
-    Developer settings are used in development mode, don't use it if you deploy in production
-    - Use Developer Settings [YES/no]:yes
-    """
-
-    markdown_file.write_text(markdown_content)
-
     yield {
         "temp_dir": temp_dir,
         "script_file": script_file,
         "hash_file": hash_file,
-        "markdown_file": markdown_file,
     }
 
     # Cleanup
     try:
         if os.path.exists(script_file):
             os.remove(script_file)
-        if os.path.exists(markdown_file):
-            os.remove(markdown_file)
         if os.path.exists(hash_file):
             os.remove(hash_file)
         os.rmdir(temp_dir)
