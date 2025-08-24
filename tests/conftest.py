@@ -51,9 +51,11 @@ def generator(temp_files):
         "--script_path",
         str(Path(__file__).parent / "default.sh"),
         "--previous_hash_path",
-        str(temp_files["hash_file"]),
+        str(Path(__file__).parent / "default_previous_hash_path.txt"),
         "--output_path",
-        str(temp_files["temp_dir"]),
+        str(temp_files["temp_dir"] / "default"),
+        "--debug",
+        str(True),
     ]
 
     with patch.object(sys, "argv", test_args):
