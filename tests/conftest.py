@@ -61,7 +61,7 @@ def generator(temp_files):
     with patch.object(sys, "argv", test_args):
         from generate_documentation import DocGenerator
 
-        yield DocGenerator()
+        yield DocGenerator().generate()
 
 
 @pytest.fixture
