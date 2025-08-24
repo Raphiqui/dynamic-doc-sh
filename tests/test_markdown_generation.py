@@ -9,6 +9,11 @@ class TestMarkdownGenerator:
     def test_generator(
         self, temp_files: dict, generator: DocGenerator, default_hash: str
     ):
+        """
+        If the default script tested change then take the new hash generated and printed then update the `default_hash`.
+        Be cautious to check that the content is the one expected.
+        """
+
         target_dir = temp_files["temp_dir"]
 
         result = subprocess.run(["ls", target_dir], capture_output=True, text=True)
