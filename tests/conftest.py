@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 import tempfile
 from pathlib import Path
@@ -22,12 +23,12 @@ def temp_files():
     }
 
     # Cleanup
-
     try:
         if os.path.exists(hash_file):
             os.remove(hash_file)
-        os.rmdir(temp_dir)
-    except OSError:
+        shutil.rmtree(temp_dir)
+    except OSError as e:
+        logger.error(e)
         pass
 
 
