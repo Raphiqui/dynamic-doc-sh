@@ -63,10 +63,3 @@ def generator(temp_files):
 
 
 @pytest.fixture
-def markdown_temp_file_hash():
-    return "0083500972854b8b48528f35d79759a3991ef8209110197f787a53b58b5d1de7"
-
-
-@pytest.fixture
-def test_script_hash():
-    return "a0bc2965e137ce31edfc97a9ab8faaa44119d6edaa27747135028a2da8250afd"
