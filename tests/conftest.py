@@ -9,7 +9,6 @@ from logging_config import logger
 
 import pytest
 
-from generate_documentation import DocGenerator
 from hash_handling import HashHandler
 
 
