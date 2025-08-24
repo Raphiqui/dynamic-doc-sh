@@ -65,3 +65,5 @@ def generator(temp_files):
 
 
 @pytest.fixture
+def default_hash():
+    return "652adc8aec8bb70ee9ba3a822c575d713a8a1e037e886ce94b7980c0fc9321ea"
