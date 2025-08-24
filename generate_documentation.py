@@ -46,6 +46,9 @@ class DocGenerator:
             default=Path(__file__).parent,
             help="Where the output file will be",
         )
+        self.parser.add_argument(
+            "--debug", type=bool, default=False, help="Debug mode, used for testing"
+        )
 
         self.args = self.parser.parse_args()
 
@@ -57,7 +60,10 @@ class DocGenerator:
         self._read_file()
         self._env = Environment(loader=FileSystemLoader("templates"))
         self._template = self._env.get_template(self.doc_template_path)
-        self.hash_handler = HashHandler(self.script_path, self.previous_hash_path)
+        self.debug = self.args.debug
+        self.hash_handler = HashHandler(
+            self.script_path, self.previous_hash_path, self.debug
+        )
 
     def check_sequence(self, sequence: dict) -> bool:
         """
@@ -129,7 +135,7 @@ class DocGenerator:
             metadata={"timestamp": datetime.now().isoformat()},
         )
 
-        with open(f"{self.output_path}/{self.script_path}-doc.md", "w") as file:
+        with open(f"{self.output_path}-doc.md", "w") as file:
             file.write(output)
 
 

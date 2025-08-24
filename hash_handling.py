@@ -10,9 +10,15 @@ class HashHandler:
     or `.in` in python
     """
 
-    def __init__(self, script_path: str, previous_hash_path: str = "previous_hash.txt"):
+    def __init__(
+        self,
+        script_path: str,
+        previous_hash_path: str = "previous_hash.txt",
+        debug: bool = False,  # used for testing purposes
+    ):
         self.script_path = script_path
         self.previous_hash_path = previous_hash_path
+        self.debug = debug
 
     def _get_current_target_hash(self, path: str) -> str:
         """
@@ -58,6 +64,10 @@ class HashHandler:
         Compare the 2 hashes to trigger or not the creation process.
         Basically it's not wanted to start the process if nothing changed
         """
+
+        if self.debug:
+            return True
+
         current_hash = self._get_current_target_hash(self.script_path)
         previous_hash = self._get_previous_target_hash(self.previous_hash_path)
 
