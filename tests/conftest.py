@@ -5,6 +5,8 @@ import tempfile
 from pathlib import Path
 from unittest.mock import patch
 
+from logging_config import logger
+
 import pytest
 
 from generate_documentation import DocGenerator
