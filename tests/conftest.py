@@ -44,7 +44,7 @@ def hash_handler(temp_files):
 
 @pytest.fixture
 def generator(temp_files):
-    """Create DocGenerator with custom template path"""
+    """Create DocGenerator with custom template path as bash command line simulation"""
 
     test_args = [
         "generate_documentation.py",
