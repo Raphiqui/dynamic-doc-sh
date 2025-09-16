@@ -1,3 +1,4 @@
+from logging_config import logger
 import argparse
 import re
 from datetime import datetime
@@ -43,7 +44,7 @@ class DocGenerator:
         self.parser.add_argument(
             "--output_path",
             type=str,
-            default=Path(__file__).parent,
+            default=f"{Path(__file__).parent}/test",
             help="Where the output file will be",
         )
         self.parser.add_argument(
@@ -135,8 +136,11 @@ class DocGenerator:
             metadata={"timestamp": datetime.now().isoformat()},
         )
 
-        with open(f"{self.output_path}-doc.md", "w") as file:
-            file.write(output)
+        try:
+            with open(f"{self.output_path}-doc.md", "w") as file:
+                file.write(output)
+        except Exception as e:
+            logger.error(e)
 
 
 if __name__ == "__main__":
