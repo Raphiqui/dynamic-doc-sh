@@ -1,0 +1,15 @@
+[project]
+name = "dynamic-doc-sh"
+version = "0.0.1"
+authors = [
+  { name = "Norsse", email = "raphael.pastre@gmail.com" }
+]
+description = "Library to dynamically document sh scripts"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/Raphiqui/dynamic-doc-sh"
+Issues = "https://github.com/Raphiqui/dynamic-doc-sh/issues"
