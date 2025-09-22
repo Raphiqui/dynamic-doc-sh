@@ -1,12 +1,13 @@
-from logging_config import logger
+from dynamic_doc_sh.logging_config import logger
 import argparse
 import re
 from datetime import datetime
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
+from importlib.resources import files
 
-from hash_handling import HashHandler
+from dynamic_doc_sh.hash_handling import HashHandler
 
 
 class DocGenerator:
@@ -59,7 +60,8 @@ class DocGenerator:
         self.output_path = self.args.output_path
         self.sequences = []
         self._read_file()
-        self._env = Environment(loader=FileSystemLoader("templates"))
+        template_path = files("dynamic_doc_sh") / "templates"
+        self._env = Environment(loader=FileSystemLoader(str(template_path)))
         self._template = self._env.get_template(self.doc_template_path)
         self.debug = self.args.debug
         self.hash_handler = HashHandler(

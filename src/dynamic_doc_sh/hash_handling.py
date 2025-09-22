@@ -1,7 +1,7 @@
 import hashlib
 import os
 
-from logging_config import logger
+from dynamic_doc_sh.logging_config import logger
 
 
 class HashHandler:

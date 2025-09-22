@@ -1,7 +1,7 @@
 import subprocess
 import hashlib
-from logging_config import logger
-from generate_documentation import DocGenerator
+from dynamic_doc_sh.logging_config import logger
+from dynamic_doc_sh.generate_documentation import DocGenerator
 
 
 class TestMarkdownGenerator:

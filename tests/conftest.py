@@ -5,11 +5,11 @@ import tempfile
 from pathlib import Path
 from unittest.mock import patch
 
-from logging_config import logger
+from dynamic_doc_sh.logging_config import logger
 
 import pytest
 
-from hash_handling import HashHandler
+from dynamic_doc_sh.hash_handling import HashHandler
 
 
 @pytest.fixture
@@ -59,7 +59,7 @@ def generator(temp_files):
     ]
 
     with patch.object(sys, "argv", test_args):
-        from generate_documentation import DocGenerator
+        from dynamic_doc_sh.generate_documentation import DocGenerator
 
         yield DocGenerator().generate()
 
