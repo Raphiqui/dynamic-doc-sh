@@ -27,7 +27,7 @@ class DocGenerator:
         self.parser.add_argument(
             "--script_path",
             type=str,
-            default="test.sh",
+            default="src/dynamic_doc_sh/test.sh",
             help="The default script to be documented",
         )
         self.parser.add_argument(
@@ -39,7 +39,7 @@ class DocGenerator:
         self.parser.add_argument(
             "--previous_hash_path",
             type=str,
-            default="previous_hash.txt",
+            default="src/dynamic_doc_sh/previous_hash.txt",
             help="Hahs of the previous documentation generated",
         )
         self.parser.add_argument(
