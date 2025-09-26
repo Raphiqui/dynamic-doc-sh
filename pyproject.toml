@@ -1,6 +1,6 @@
 [project]
 name = "dynamic-doc-sh"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name = "Norsse", email = "raphael.pastre@gmail.com" }
 ]
@@ -9,6 +9,10 @@ readme = "README.md"
 requires-python = ">=3.12"
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
+
+dependencies = [
+    "jinja2>=3.1"
+]
 
 [project.urls]
 Homepage = "https://github.com/Raphiqui/dynamic-doc-sh"
