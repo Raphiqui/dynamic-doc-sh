@@ -1,7 +1,6 @@
 from dynamic_doc_sh.logging_config import logger
 import re
 from datetime import datetime
-from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 from importlib.resources import files
