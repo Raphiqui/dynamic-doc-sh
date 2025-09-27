@@ -1,5 +1,4 @@
 from dynamic_doc_sh.logging_config import logger
-import argparse
 import re
 from datetime import datetime
 from pathlib import Path
@@ -15,55 +14,27 @@ class DocGenerator:
 
     def __init__(
         self,
+        script_path: str,
+        doc_template_path: str,
+        previous_hash_path: str,
+        output_path: str,
+        debug: bool,
     ) -> None:
         """
         For now just the .sh scripts are available
         Script path is basically where is the script you want to document
         Doc template path in case some other templates are available
         """
-
-        self.parser = argparse.ArgumentParser(description="Documentation generator")
-
-        self.parser.add_argument(
-            "--script_path",
-            type=str,
-            default="src/dynamic_doc_sh/test.sh",
-            help="The default script to be documented",
-        )
-        self.parser.add_argument(
-            "--doc_template_path",
-            type=str,
-            default="doc_template.md.j2",
-            help="Jinja template to generate the documentation",
-        )
-        self.parser.add_argument(
-            "--previous_hash_path",
-            type=str,
-            default="src/dynamic_doc_sh/previous_hash.txt",
-            help="Hahs of the previous documentation generated",
-        )
-        self.parser.add_argument(
-            "--output_path",
-            type=str,
-            default=f"{Path(__file__).parent}/test",
-            help="Where the output file will be",
-        )
-        self.parser.add_argument(
-            "--debug", type=bool, default=False, help="Debug mode, used for testing"
-        )
-
-        self.args = self.parser.parse_args()
-
-        self.script_path = self.args.script_path
-        self.doc_template_path = self.args.doc_template_path
-        self.previous_hash_path = self.args.previous_hash_path
-        self.output_path = self.args.output_path
+        self.script_path = script_path
+        self.doc_template_path = doc_template_path
+        self.previous_hash_path = previous_hash_path
+        self.output_path = output_path
         self.sequences = []
         self._read_file()
         template_path = files("dynamic_doc_sh") / "templates"
         self._env = Environment(loader=FileSystemLoader(str(template_path)))
         self._template = self._env.get_template(self.doc_template_path)
-        self.debug = self.args.debug
+        self.debug = debug
         self.hash_handler = HashHandler(
             self.script_path, self.previous_hash_path, self.debug
         )
@@ -143,8 +114,3 @@ class DocGenerator:
                 file.write(output)
         except Exception as e:
             logger.error(e)
-
-
-if __name__ == "__main__":
-    generator = DocGenerator()
-    generator.generate()
