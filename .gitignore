@@ -1,3 +1,5 @@
 .python-version
 .pypirc
 __pycache__
+dist
+*.egg-info
