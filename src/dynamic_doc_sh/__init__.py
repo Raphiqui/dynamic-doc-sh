@@ -16,10 +16,10 @@ def generate():
         help="The script to be documented",
     )
     parser.add_argument(
-        "--doc_template_path",
+        "--script_language",
         type=str,
-        required=True,
-        help="Jinja template to generate the documentation",
+        default="bash",
+        help="Script language to be mapped to jinja template, bash, python, javascript, ...",
     )
     parser.add_argument(
         "--previous_hash_path",
@@ -41,7 +41,7 @@ def generate():
 
     generator = DocGenerator(
         script_path=args.script_path,
-        doc_template_path=args.doc_template_path,
+        script_language=args.script_language,
         previous_hash_path=args.previous_hash_path,
         output_path=args.output_path,
         debug=args.debug,
