@@ -14,7 +14,7 @@ class DocGenerator:
     def __init__(
         self,
         script_path: str,
-        doc_template_path: str,
+        script_language: str,
         previous_hash_path: str,
         output_path: str,
         debug: bool,
@@ -24,19 +24,26 @@ class DocGenerator:
         Script path is basically where is the script you want to document
         Doc template path in case some other templates are available
         """
+        self.j2_templates_mapping = {"bash": "doc_template.md.j2"}
         self.script_path = script_path
-        self.doc_template_path = doc_template_path
+        self.script_language = script_language
         self.previous_hash_path = previous_hash_path
         self.output_path = output_path
         self.sequences = []
         self._read_file()
-        template_path = files("dynamic_doc_sh") / "templates"
-        self._env = Environment(loader=FileSystemLoader(str(template_path)))
-        self._template = self._env.get_template(self.doc_template_path)
         self.debug = debug
+        self._template = self._build_template()
         self.hash_handler = HashHandler(
             self.script_path, self.previous_hash_path, self.debug
         )
+
+    def _build_template(self):
+
+        doc_template_path = self.j2_templates_mapping[self.script_language]
+
+        template_path = files("dynamic_doc_sh") / "templates"
+        environment = Environment(loader=FileSystemLoader(str(template_path)))
+        return environment.get_template(doc_template_path)
 
     def check_sequence(self, sequence: dict) -> bool:
         """
