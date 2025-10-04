@@ -9,7 +9,9 @@ from dynamic_doc_sh.hash_handling import HashHandler
 
 
 class DocGenerator:
-    """ """
+    """
+    Main class of this project used to generate the documentation according to what have been specified as arguments.
+    """
 
     def __init__(
         self,
@@ -38,6 +40,9 @@ class DocGenerator:
         )
 
     def _build_template(self):
+        """
+        Build template according to specified language, bash, python, JavaScript, ...
+        """
 
         doc_template_path = self.j2_templates_mapping[self.script_language]
 
