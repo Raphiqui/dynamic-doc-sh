@@ -16,10 +16,10 @@ class DocGenerator:
     def __init__(
         self,
         script_path: str,
-        script_language: str,
         previous_hash_path: str,
         output_path: str,
         debug: bool,
+        script_language: str = "bash",
     ) -> None:
         """
         For now just the .sh scripts are available

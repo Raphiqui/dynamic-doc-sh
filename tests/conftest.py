@@ -10,6 +10,7 @@ from dynamic_doc_sh.logging_config import logger
 import pytest
 
 from dynamic_doc_sh.hash_handling import HashHandler
+from dynamic_doc_sh import generate
 
 
 @pytest.fixture
@@ -47,7 +48,7 @@ def generator(temp_files):
     """Create DocGenerator with custom template path as bash command line simulation"""
 
     test_args = [
-        "generate_documentation.py",
+        "dynamicdoc",
         "--script_path",
         str(Path(__file__).parent / "default.sh"),
         "--previous_hash_path",
@@ -59,9 +60,7 @@ def generator(temp_files):
     ]
 
     with patch.object(sys, "argv", test_args):
-        from dynamic_doc_sh.generate_documentation import DocGenerator
-
-        yield DocGenerator().generate()
+        generate()
 
 
 @pytest.fixture
