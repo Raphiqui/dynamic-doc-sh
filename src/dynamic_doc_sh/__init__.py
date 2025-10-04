@@ -19,7 +19,7 @@ def generate():
         "--script_language",
         type=str,
         default="bash",
-        help="Script language to be mapped to jinja template, bash, python, javascript, ...",
+        help="Script language to be mapped to jinja template. Available options: bash",
     )
     parser.add_argument(
         "--previous_hash_path",

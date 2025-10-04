@@ -47,9 +47,7 @@ class DocGenerator:
         try:
             doc_template_path = self.j2_templates_mapping[self.script_language]
         except Exception as e:
-            logger.error(
-                f"Getting template from language specified failed with error: {e}"
-            )
+            logger.error(f"Template for language {self.script_language} doesn't exist")
             raise
 
         template_path = files("dynamic_doc_sh") / "templates"
