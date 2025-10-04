@@ -44,7 +44,13 @@ class DocGenerator:
         Build template according to specified language, bash, python, JavaScript, ...
         """
 
-        doc_template_path = self.j2_templates_mapping[self.script_language]
+        try:
+            doc_template_path = self.j2_templates_mapping[self.script_language]
+        except Exception as e:
+            logger.error(
+                f"Getting template from language specified failed with error: {e}"
+            )
+            raise
 
         template_path = files("dynamic_doc_sh") / "templates"
         environment = Environment(loader=FileSystemLoader(str(template_path)))
