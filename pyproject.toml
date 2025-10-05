@@ -1,6 +1,6 @@
 [project]
 name = "dynamic-doc-sh"
-version = "0.0.2"
+version = "1.0.0"
 authors = [
   { name = "Norsse", email = "raphael.pastre@gmail.com" }
 ]
