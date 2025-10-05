@@ -5,7 +5,7 @@ authors = [
   { name = "Norsse", email = "raphael.pastre@gmail.com" }
 ]
 description = "Library to dynamically document sh scripts"
-readme = "README.md"
+readme = "Usage.md"
 requires-python = ">=3.12"
 license = "MIT"
 license-files = ["LICEN[CS]E*"]

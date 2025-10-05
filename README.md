@@ -1,6 +1,6 @@
 # Dynamic Doc SH
 
-A dynamic documentation generator for shell scripts using inline tags, inspired by Swagger's approach to API documentation.
+A dynamic documentation generator to be invoked, using inline tags inspired by Swagger's approach to API documentation.
 
 ## Overview
 
@@ -10,11 +10,11 @@ Similar to how Swagger generates API documentation from code annotations, this t
 
 ## Features
 
- - 🏷️ Tag-based Documentation: Use simple tags to mark functions, variables, and script sections
- - 📝 Automatic Markdown Generation: Generates clean .md files from your tagged shell scripts
- - 🔄 Dynamic Updates: Documentation stays current with your code changes
- - 🎯 Multiple Tag Types: Support for different documentation elements
- - 📋 Template Generation: Creates consistent documentation structure
+ - Tag-based Documentation: Use simple tags to mark functions, variables, and script sections
+ - Automatic Markdown Generation: Generates clean .md files from your tagged shell scripts
+ - Dynamic Updates: Documentation stays current with your code changes
+ - Multiple Tag Types: Support for different documentation elements
+ - Template Generation: Creates consistent documentation structure
 
 ## How It Works
 
@@ -28,6 +28,6 @@ Run tests:
 
 ```
 cd .
+pip install -e .
 python -m pytest -s
 ```
-
