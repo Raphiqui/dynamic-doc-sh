@@ -31,3 +31,20 @@ cd .
 pip install -e .
 python -m pytest -s
 ```
+
+### How to run it
+
+The `debug` mode is important to avoid misunderstanding about how things works.
+If it's passed as argument then there is no need to update the previous hash file, otherwise the documentation file 
+won't be updated.
+
+```bash
+dynamicdoc --script_path /tmp/testing_dynamic_doc/default.sh --previous_hash_path /tmp/testing_dynamic_doc
+/default_previous_hash_path.txt --output_path /tmp/testing_dynamic_doc/output --debug True
+```
+
+ - `--script_path`, where the script to document is located
+ - `--previous_hash_path`, where the hash history file is located
+ - `--script_language`, specifies which language has been used by the script for the library to be able to use the correct jinja template, `bash` is the default choice
+ - `--output_path`, where to put the newly created documentation
+ - `--debug`, allows to override the doc file without updating the hash file 
