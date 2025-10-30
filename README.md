@@ -22,6 +22,25 @@ Similar to how Swagger generates API documentation from code annotations, this t
  - Run generator, execute the script to parse your shell files
  - Get documentation, lean Markdown documentation is generated/updated automatically
 
+### Example
+
+The following example shows all available tags.
+
+```
+#!/bin/bash
+
+set -e
+
+# @doc: Developer settings are used in development mode, don't use it if you deploy in production
+# @default: yes
+read -e -i yes -p "Use Developer Settings [YES/no]" developer_settings
+echo "Developer Settings: $developer_settings"
+```
+
+`@doc` tag is mandatory if it's not present then the process will be aborted, same for the `read` directive.
+
+`@default` is an additional tag that is not mandatory and can be used if needed.
+
 ## Testing
 
 Run tests:
