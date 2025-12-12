@@ -67,3 +67,12 @@ dynamicdoc --script_path /tmp/testing_dynamic_doc/default.sh --previous_hash_pat
  - `--script_language`, specifies which language has been used by the script for the library to be able to use the correct jinja template, `bash` is the default choice
  - `--output_path`, where to put the newly created documentation
  - `--debug`, allows to override the doc file without updating the hash file 
+
+### Upgrade dependencies
+
+![pur](https://pypi.org/project/pur/) is the library of choice.
+
+```
+cd src/dynamic_doc_sh
+pur -r requirements.txt
+```
