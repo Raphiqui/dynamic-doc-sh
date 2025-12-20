@@ -1,9 +1,9 @@
 name: GitHub Actions Helper
 run-name: Helper runner
 on: 
-  # Schedule the workflow to run every 5 minutes
+  # Schedule the workflow to run the first day of every month at midnight UTC
   schedule:
-    - cron: "5 * * * *"
+    - cron: "0 0 1 * *"
   # Allow manual triggering of the workflow
   workflow_dispatch:
   # Trigger the workflow on pushes to the main branch
@@ -13,15 +13,37 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required to push changes
     steps:
     - uses: actions/checkout@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up python 3.13
       uses: actions/setup-python@v6
       with:
         python-version: '3.13'
+
     - name: Run pur
       run: |
         cd src/dynamic_doc_sh
         python -m pip install --upgrade pip
         pip install pur
         pur -r requirements.txt
+
+    - name: Check for changes
+      id: git-check
+      run: |
+        cd src/dynamic_doc_sh
+        git diff --exit-code requirements.txt || echo "changed=true" >> $GITHUB_OUTPUT
+
+    - name: Commit and push if changed
+      if: steps.git-check.outputs.changed == 'true'
+      run: |
+        git config --global user.name '${{ vars.GIT_USER_NAME }}'
+        git config --global user.email '${{ vars.GIT_USER_EMAIL }}'
+        cd src/dynamic_doc_sh
+        git add requirements.txt
+        git commit -m "chore: update requirements.txt with latest versions [skip ci]"
+        git push
