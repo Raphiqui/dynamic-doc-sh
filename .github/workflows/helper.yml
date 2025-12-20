@@ -1,0 +1,25 @@
+name: GitHub Actions Helper
+run-name: Helper runner
+on: 
+  # Schedule the workflow to run every 5 minutes
+  schedule:
+    - cron: "5 * * * *"
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
+  # Trigger the workflow on pushes to the main branch
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - name: Set up python 3.13
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.13'
+    - name: Run 
+      run: |
+        cd src/dynamic_doc_sh
+        pur -r requirements.txt
