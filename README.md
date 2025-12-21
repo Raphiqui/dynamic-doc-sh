@@ -72,7 +72,7 @@ dynamicdoc --script_path /tmp/testing_dynamic_doc/default.sh --previous_hash_pat
 
 ![pur](https://pypi.org/project/pur/) is the library of choice.
 
-Github actions are set up so logically no need to do anything manually (until it failed).
+Github actions are set up so logically no need to do anything manually (until it failed). See `.github/workflows/helper.yml` for more details.
 
 ```
 cd src/dynamic_doc_sh
