@@ -5,6 +5,7 @@ from dynamic_doc_sh.generate_documentation import DocGenerator
 
 
 class TestMarkdownGenerator:
+    """Testing class"""
 
     def test_generator(
         self, temp_files: dict, generator: DocGenerator, default_hash: str
